@@ -16,17 +16,17 @@ export async function POST(req: NextRequest) {
 
     if (!apiKey) {
       return NextResponse.json(
-        { error: "Google AI API key not configured. Please add GOOGLE_AI_API_KEY to your .env.local file" },
+        { error: "GOOGLE_AI_API_KEY is required in .env.local" },
         { status: 500 }
       );
     }
 
-    // Initialize Google Generative AI
+    // Initialize Google Generative AI with API key
     const genAI = new GoogleGenerativeAI(apiKey);
 
-    // Get the generative model
+    // Get the generative model  
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
     });
 
     // Generate content
@@ -35,10 +35,14 @@ export async function POST(req: NextRequest) {
     const text = response.text();
 
     return NextResponse.json({ response: text });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error calling Google AI:", error);
+    console.error("Error message:", error?.message);
     return NextResponse.json(
-      { error: "Failed to generate response" },
+      {
+        error: "Failed to generate response",
+        details: error?.message || "Unknown error",
+      },
       { status: 500 }
     );
   }
