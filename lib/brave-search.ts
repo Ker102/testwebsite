@@ -3,7 +3,7 @@
  * Provides web search capabilities for the AI assistant
  */
 
-interface BraveSearchResult {
+export interface BraveSearchResult {
   title: string;
   url: string;
   description: string;
@@ -21,7 +21,12 @@ interface BraveSearchResponse {
   };
 }
 
-export async function searchBrave(query: string): Promise<string> {
+export interface SearchResults {
+  formattedResults: string;
+  urls: string[];
+}
+
+export async function searchBrave(query: string): Promise<SearchResults> {
   const apiKey = process.env.BRAVE_API_KEY;
 
   if (!apiKey) {
@@ -48,8 +53,14 @@ export async function searchBrave(query: string): Promise<string> {
     const results = data.web?.results || [];
 
     if (results.length === 0) {
-      return "No search results found.";
+      return {
+        formattedResults: "No search results found.",
+        urls: [],
+      };
     }
+
+    // Extract URLs for content fetching
+    const urls = results.slice(0, 5).map((result) => result.url);
 
     // Format results for the AI
     const formattedResults = results.slice(0, 5).map((result, index) => {
@@ -59,7 +70,10 @@ export async function searchBrave(query: string): Promise<string> {
    ${result.age ? `Published: ${result.age}` : ""}`;
     }).join("\n\n");
 
-    return `Web Search Results for "${query}":\n\n${formattedResults}`;
+    return {
+      formattedResults: `Web Search Results for "${query}":\n\n${formattedResults}`,
+      urls,
+    };
   } catch (error) {
     console.error("Brave Search error:", error);
     throw error;

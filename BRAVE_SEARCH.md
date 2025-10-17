@@ -11,14 +11,23 @@ The system automatically detects when a query needs web search based on keywords
 - "what is", "who is"
 - "latest", "current", "recent", "news"
 - "today", "2024", "2025"
-- And more...
+- "weather", "temperature", "time", "date"
+- And many more...
 
-### Search Flow
+### Search Flow with Full Webpage Access
 1. **User sends message** → System checks if it needs web search
 2. **If search needed** → Brave Search API is called
-3. **Search results** → Top 5 results are retrieved
-4. **Context to AI** → Results are provided to Gemini as context
-5. **AI Response** → Gemini answers using the search results
+3. **Search results** → Top 5 results are retrieved (with URLs)
+4. **Fetch web content** → System fetches and reads full content from top 3 webpages
+5. **Extract text** → HTML is parsed and readable text is extracted
+6. **Context to AI** → Both search snippets AND full webpage content are provided to Gemini
+7. **AI Response** → Gemini answers using detailed, real-time information from actual webpages
+
+**Key Advantage:** The AI can now read the FULL content of webpages, not just search result snippets. This means:
+- ✅ Accurate weather data (exact temperatures, forecasts)
+- ✅ Real-time information (current prices, scores, news)
+- ✅ Detailed answers with specific facts and numbers
+- ✅ Source citations from actual webpage content
 
 ## Configuration
 
