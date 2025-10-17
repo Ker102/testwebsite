@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import DarkVeil from "./DarkVeil";
-import { Sparkles, Send, Bot, User, Zap } from "lucide-react";
+import { Sparkles, Send, Bot, User, Zap, Globe } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 
 interface Message {
@@ -59,6 +59,11 @@ export default function Chat() {
           content: data.response,
         };
         setMessages((prev) => [...prev, assistantMessage]);
+        
+        // Log if web search was used
+        if (data.usedWebSearch) {
+          console.log("🌐 Response includes web search results");
+        }
       } else {
         const errorMessage: Message = {
           role: "assistant",
@@ -192,6 +197,7 @@ export default function Chat() {
                   ></div>
                 </div>
                 <span className="text-white/70 text-sm font-medium">AI is thinking</span>
+                <Globe className="w-4 h-4 text-blue-400 animate-pulse ml-2" />
               </div>
             </div>
           </div>
