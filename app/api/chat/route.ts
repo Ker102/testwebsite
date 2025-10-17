@@ -45,16 +45,40 @@ export async function POST(req: NextRequest) {
       model: "gemini-2.5-flash",
     });
 
+    // Get current date and time for context
+    const now = new Date();
+    const currentDateTime = now.toUTCString();
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    
     // Construct the prompt with search results if available
     let prompt = message;
     if (usedSearch && searchResults) {
-      prompt = `Based on the following web search results, please answer the user's question.
+      prompt = `You are an AI assistant with access to real-time web search. Current date/time: ${currentDateTime} (Server Time)
 
+WEB SEARCH RESULTS:
 ${searchResults}
 
 User Question: ${message}
 
-Please provide a comprehensive answer using the search results above. Cite sources when relevant.`;
+IMPORTANT INSTRUCTIONS:
+- Use the web search results above to provide accurate, up-to-date information
+- For weather queries: Extract temperature, conditions, forecast, and location-specific data from search results
+- For time/date queries: Use current date/time (${currentDateTime}) and timezone info from search results
+- For location queries: Use the specific location data and real-time information from search results
+- For current events: Provide the latest information with specific dates and sources
+- Always cite sources by mentioning the website or publication (e.g., "According to [source]...")
+- If search results don't contain exact data, acknowledge limitations and provide best available info
+- Prefer real-time search data over your training knowledge cutoff
+- Be specific with numbers, dates, times, and facts from the search results
+- Format your response naturally and conversationally
+
+Provide a comprehensive, accurate answer using the web search results.`;
+    } else {
+      // Add context even without search
+      prompt = `Current date/time: ${currentDateTime} (Server Time)
+Note: You may not have access to real-time information for this query. If the user asks about current events, weather, time, or other real-time data, let them know you don't have access to live information.
+
+User Question: ${message}`;
     }
 
     // Generate content
