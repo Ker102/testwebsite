@@ -7,6 +7,9 @@ A modern Next.js application with TypeScript, Tailwind CSS, and essential librar
 - ⚡ **Next.js 15** with App Router and Turbopack
 - 🎨 **Tailwind CSS 4** for styling
 - 📘 **TypeScript** for type safety
+- 🔐 **NextAuth.js** with Google OAuth for user authentication
+- 🤖 **Google Gemini 2.5 Flash** AI integration
+- 🛡️ **Dual Authentication System** - User & Admin layers
 - 🧪 **Vitest** with React Testing Library for testing
 - 🎯 **ESLint** and **Prettier** for code quality
 - 🔄 **React Query** for server state management
@@ -24,11 +27,26 @@ A modern Next.js application with TypeScript, Tailwind CSS, and essential librar
 
 ### Installation
 
-Install dependencies:
+1. Install dependencies:
 
 ```bash
 npm install
 ```
+
+2. Set up environment variables:
+
+Copy the `env.template` file to `.env.local`:
+
+```bash
+cp env.template .env.local
+```
+
+Then edit `.env.local` and fill in your credentials:
+- **Google OAuth**: Follow the [Google Auth Setup Guide](./GOOGLE_AUTH_SETUP.md)
+- **Admin Password**: Set a secure password for admin access
+- **Google AI API Key**: Get from [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+For detailed Google OAuth setup instructions, see [GOOGLE_AUTH_SETUP.md](./GOOGLE_AUTH_SETUP.md)
 
 ### Development
 
@@ -66,23 +84,64 @@ npm start
 - `npm run test:ui` - Run tests with UI
 - `npm run test:coverage` - Run tests with coverage
 
+## Authentication System
+
+This application uses a **dual authentication system**:
+
+### 1. User Authentication (Google OAuth)
+- **Purpose**: Save user progress and chat history across sessions
+- **Provider**: Google OAuth via NextAuth.js
+- **Access Level**: Anyone with a Google account can sign in
+- **Features**:
+  - Persistent user sessions
+  - Chat history saved per user
+  - Profile management
+
+### 2. Admin Authentication (Password-based)
+- **Purpose**: Gate access to AI/LLM features
+- **Method**: Password authentication via Zustand store
+- **Access Level**: Only users with admin credentials
+- **Features**:
+  - Required to use Gemini AI chat features
+  - Independent of user authentication
+  - Session-based access control
+
+**How it works:**
+- Users can sign in with Google to save their progress
+- To actually use the AI features, they must also authenticate as admin
+- Both authentications work independently and serve different purposes
+
 ## Project Structure
 
 ```
-├── app/                 # Next.js app directory
-│   ├── layout.tsx      # Root layout
-│   ├── page.tsx        # Home page
-│   └── globals.css     # Global styles
-├── components/         # React components
-│   ├── ui/            # UI components
-│   └── providers.tsx  # App providers
-├── lib/               # Utility functions
-│   ├── utils.ts       # Helper utilities
-│   └── constants.ts   # App constants
-├── types/             # TypeScript types
-├── hooks/             # Custom React hooks
-├── test/              # Test setup and utilities
-└── public/            # Static files
+├── app/                      # Next.js app directory
+│   ├── api/
+│   │   ├── auth/            # NextAuth API routes
+│   │   └── chat/            # AI chat API endpoint
+│   ├── auth/
+│   │   └── signin/          # Custom sign-in page
+│   ├── admin/
+│   │   └── login/           # Admin login page
+│   ├── layout.tsx           # Root layout
+│   ├── page.tsx             # Home page
+│   └── globals.css          # Global styles
+├── components/              # React components
+│   ├── ui/                  # UI components
+│   ├── Chat.tsx             # Main chat component
+│   ├── DarkVeil.tsx         # Animated background
+│   └── providers.tsx        # App providers
+├── lib/                     # Utility functions
+│   ├── auth-store.ts        # Admin auth state
+│   ├── brave-search.ts      # Web search integration
+│   ├── web-fetcher.ts       # Web content fetcher
+│   ├── utils.ts             # Helper utilities
+│   └── constants.ts         # App constants
+├── types/                   # TypeScript types
+│   ├── index.ts             # Common types
+│   └── next-auth.d.ts       # NextAuth type extensions
+├── hooks/                   # Custom React hooks
+├── test/                    # Test setup and utilities
+└── public/                  # Static files
 ```
 
 ## Technologies
@@ -91,6 +150,7 @@ npm start
 - [Next.js](https://nextjs.org/) - React framework
 - [React](https://react.dev/) - UI library
 - [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [NextAuth.js](https://next-auth.js.org/) - Authentication for Next.js
 
 ### Styling
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
