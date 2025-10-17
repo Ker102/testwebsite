@@ -1,4 +1,4 @@
-import { VertexAI } from "@google-cloud/vertexai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -12,37 +12,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const projectId = process.env.GOOGLE_CLOUD_PROJECT;
-    const location = process.env.GOOGLE_CLOUD_LOCATION || "us-central1";
-    const apiKey = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+    const apiKey = process.env.GOOGLE_AI_API_KEY;
 
-    if (!projectId || !apiKey) {
+    if (!apiKey) {
       return NextResponse.json(
-        { error: "Vertex AI configuration not complete" },
+        { error: "Google AI API key not configured. Please add GOOGLE_AI_API_KEY to your .env.local file" },
         { status: 500 }
       );
     }
 
-    // Initialize Vertex AI
-    const vertexAI = new VertexAI({
-      project: projectId,
-      location: location,
-      apiKey: apiKey,
-    });
+    // Initialize Google Generative AI
+    const genAI = new GoogleGenerativeAI(apiKey);
 
     // Get the generative model
-    const model = vertexAI.getGenerativeModel({
+    const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
     });
 
     // Generate content
     const result = await model.generateContent(message);
     const response = result.response;
-    const text = response.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    const text = response.text();
 
     return NextResponse.json({ response: text });
   } catch (error) {
-    console.error("Error calling Vertex AI:", error);
+    console.error("Error calling Google AI:", error);
     return NextResponse.json(
       { error: "Failed to generate response" },
       { status: 500 }
