@@ -36,3 +36,30 @@
  GET / 200 in 189ms
  GET /api/auth/session 200 in 296ms
  GET /api/auth/session 200 in 492ms
+ GET /api/auth/session 200 in 408ms
+ ✓ Compiled /api/chat in 192ms
+ POST /api/chat 200 in 1933ms
+ POST /api/chat 200 in 2180ms
+ POST /api/chat 200 in 17328ms
+ GET /api/auth/csrf 200 in 326ms
+ POST /api/auth/signout 200 in 333ms
+ GET / 200 in 201ms
+ GET /api/auth/session 200 in 354ms
+ GET /admin/login 200 in 238ms
+ POST /api/auth/login 200 in 314ms
+ GET / 200 in 171ms
+ GET /api/auth/providers 200 in 419ms
+ GET /api/auth/csrf 200 in 309ms
+ POST /api/auth/signin/google 200 in 458ms
+ GET /api/auth/callback/google?state=M4SdY6ikE3SNo77YPqtlAu_zhcP7ox0DtSsGKlhrvBc&code=4%2F0AVGzR1DrC3grDtp_QR2oQuTG7138aoeJL6YLqzSptJ-k7PEldAVkQWTmWoV7N0mMHzxKrA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=1&prompt=none 302 in 524ms
+ GET / 200 in 213ms
+ GET /api/auth/session 200 in 297ms
+ GET /api/auth/session 200 in 396ms
+ GET /api/auth/session 200 in 428ms
+ GET / 200 in 194ms
+ GET /api/auth/session 200 in 420ms
+ GET /api/auth/session 200 in 450ms
+ GET / 200 in 209ms
+ GET /api/auth/session 200 in 471ms
+ GET / 200 in 179ms
+ GET /api/auth/session 200 in 406ms
