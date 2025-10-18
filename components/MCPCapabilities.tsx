@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const capabilities = [
   {
     name: "GitMCP",
-    logo: "https://raw.githubusercontent.com/idosal/git-mcp/main/logo.png",
+    logo: "/mcp.svg",
     fallbackLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
     description: "Access GitHub repositories, documentation, and code examples from any public repo",
     color: "from-purple-500 to-pink-600",
@@ -22,8 +22,8 @@ const capabilities = [
   },
   {
     name: "Firecrawl",
-    logo: "https://raw.githubusercontent.com/mendableai/firecrawl/main/apps/www/public/logo.png",
-    fallbackLogo: "https://www.firecrawl.dev/_next/image?url=%2Flogo.png&w=64&q=75",
+    logo: "https://firecrawl.dev/logo.png",
+    fallbackLogo: "https://www.firecrawl.dev/_next/image?url=%2Flogo.png&w=256&q=75",
     description: "Advanced web scraping for complex sites like Medium, Reddit, and Stack Overflow",
     color: "from-blue-500 to-cyan-600",
     bgColor: "bg-blue-50",
