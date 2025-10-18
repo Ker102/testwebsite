@@ -15,10 +15,10 @@ export default function MarkdownRenderer({
   isAuthenticated,
 }: MarkdownRendererProps) {
   return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      className={`markdown-content ${isAuthenticated ? "markdown-light" : "markdown-dark"}`}
-      components={{
+    <div className={`markdown-content ${isAuthenticated ? "markdown-light" : "markdown-dark"}`}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
         // Code blocks
         code({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || "");
@@ -175,10 +175,11 @@ export default function MarkdownRenderer({
             }`}
           />
         ),
-      }}
-    >
-      {content}
-    </ReactMarkdown>
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
   );
 }
 
