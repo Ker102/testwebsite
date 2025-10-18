@@ -59,14 +59,14 @@ Created comprehensive documentation files:
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-brave-search"],
       "env": {
-        "BRAVE_API_KEY": "***REMOVED***"
+        "BRAVE_API_KEY": "your_brave_api_key_here"
       }
     },
     "firecrawl-mcp": {
       "command": "npx",
       "args": ["-y", "firecrawl-mcp"],
       "env": {
-        "FIRECRAWL_API_KEY": "***REMOVED***"
+        "FIRECRAWL_API_KEY": "your_firecrawl_api_key_here"
       }
     },
     "github": {

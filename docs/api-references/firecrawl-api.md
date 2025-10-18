@@ -89,7 +89,7 @@ Sign up and get your API key from: [https://firecrawl.dev/app/api-keys](https://
       "command": "npx",
       "args": ["-y", "firecrawl-mcp"],
       "env": {
-        "FIRECRAWL_API_KEY": "***REMOVED***"
+        "FIRECRAWL_API_KEY": "your_firecrawl_api_key_here"
       }
     }
   }
