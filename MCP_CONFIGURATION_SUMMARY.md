@@ -60,23 +60,15 @@ Your branch is ahead of origin/main by 2 commits.
 2. Verify that `git-mcp-server` is listed
 3. Check that it shows as "Connected"
 
-### 2. Fix Firecrawl API Key (Recommended)
+### 2. ~~Fix Firecrawl API Key~~ ✅ FIXED
 
-**Current Status**: ❌ Invalid/Expired
+**Current Status**: ✅ Fixed
 
-The Firecrawl API key in your MCP configuration is returning "Unauthorized" errors.
+**Issue Found**: The Firecrawl configuration had two problems:
+1. Server name was `"firecrawl"` instead of `"firecrawl-mcp"`
+2. API key had incorrect case: `"Fc-"` instead of `"fc-"`
 
-**How to Fix**:
-1. Get a new API key from [firecrawl.dev](https://firecrawl.dev)
-2. Update the key in `~/.cursor/mcp.json`:
-   ```json
-   "firecrawl": {
-     "env": {
-       "FIRECRAWL_API_KEY": "your-new-key-here"
-     }
-   }
-   ```
-3. Restart Cursor
+**Resolution**: Both issues have been corrected in the mcp.json file. Firecrawl should now work properly after restarting Cursor.
 
 ### 3. Configure GitHub Token (Recommended)
 
@@ -115,7 +107,7 @@ git push origin main
 |--------|--------|-------|
 | **git-mcp-server** | ✅ Configured | Restart Cursor to activate |
 | **brave-search** | ✅ Working | API key is valid |
-| **firecrawl** | ❌ Needs Fix | Invalid API key |
+| **firecrawl-mcp** | ✅ Fixed | Configuration corrected (server name + API key case) |
 | **github** | ❌ Needs Fix | Placeholder token |
 
 ## How to Use Git MCP Server
