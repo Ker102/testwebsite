@@ -1,26 +1,32 @@
 "use client";
 
 import { Sparkles, Zap, Bot, ArrowDown } from "lucide-react";
+import ChatInterface, { AuthButtons } from "./ChatInterface";
 
 export default function HeroSection() {
-  const scrollToChat = () => {
-    const chatSection = document.getElementById("chat-section");
-    if (chatSection) {
-      chatSection.scrollIntoView({ behavior: "smooth" });
+  const scrollToCapabilities = () => {
+    const capabilitiesSection = document.getElementById("capabilities-section");
+    if (capabilitiesSection) {
+      capabilitiesSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col px-6 py-8 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
       {/* Animated background blobs */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
         <div className="absolute top-40 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
         <div className="absolute -bottom-8 left-40 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
       </div>
 
+      {/* Auth Buttons - Top Right */}
+      <div className="relative z-20 flex justify-end mb-4 animate-fade-in">
+        <AuthButtons />
+      </div>
+
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto text-center">
+      <div className="relative z-10 max-w-5xl mx-auto text-center flex-1 flex flex-col justify-center">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg mb-8 animate-fade-in">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
@@ -68,29 +74,25 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* CTA Button */}
-        <button
-          onClick={scrollToChat}
-          className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-lg shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-800"
-        >
-          <span>Try It Now</span>
-          <Zap className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-          
-          {/* Animated glow */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-50 blur-xl transition-opacity duration-300" />
-        </button>
+        {/* Chat Input */}
+        <div className="mt-12 max-w-3xl mx-auto w-full animate-fade-in animation-delay-800">
+          <ChatInterface />
+        </div>
 
         {/* Scroll indicator */}
-        <div className="mt-20 animate-bounce">
+        <div className="mt-12 animate-bounce">
           <button
-            onClick={scrollToChat}
+            onClick={scrollToCapabilities}
             className="inline-flex flex-col items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors duration-300"
           >
-            <span className="text-sm font-medium">Scroll to explore</span>
+            <span className="text-sm font-medium">Explore capabilities</span>
             <ArrowDown className="w-6 h-6" />
           </button>
         </div>
       </div>
+      
+      {/* Extra bottom spacing */}
+      <div className="h-16"></div>
 
       {/* Floating icons animation */}
       <div className="absolute inset-0 pointer-events-none">

@@ -38,7 +38,7 @@ export default function MCPCapabilities() {
   }, []);
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-white to-gray-50">
+    <section id="capabilities-section" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div
