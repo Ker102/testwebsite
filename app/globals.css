@@ -80,3 +80,103 @@ body {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* Markdown Content Styles */
+.markdown-content {
+  line-height: 1.6;
+}
+
+.markdown-content pre {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.markdown-content code {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  padding-left: 1.5rem;
+}
+
+.markdown-content li > ul,
+.markdown-content li > ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content table {
+  border-collapse: collapse;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+/* Scrollbar styling for code blocks */
+.markdown-content pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.markdown-content pre::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.markdown-content pre::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.markdown-content pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Light mode markdown */
+.markdown-light {
+  color: #1f2937;
+}
+
+.markdown-light h1,
+.markdown-light h2,
+.markdown-light h3,
+.markdown-light h4,
+.markdown-light h5,
+.markdown-light h6 {
+  color: #111827;
+}
+
+.markdown-light a {
+  color: #2563eb;
+}
+
+.markdown-light code {
+  color: #dc2626;
+}
+
+/* Dark mode markdown */
+.markdown-dark {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.markdown-dark h1,
+.markdown-dark h2,
+.markdown-dark h3,
+.markdown-dark h4,
+.markdown-dark h5,
+.markdown-dark h6 {
+  color: #ffffff;
+}
+
+.markdown-dark a {
+  color: #60a5fa;
+}
+
+.markdown-dark code {
+  color: #fbbf24;
+}

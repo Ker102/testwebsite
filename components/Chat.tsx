@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
 import DarkVeil from "./DarkVeil";
+import MarkdownRenderer from "./MarkdownRenderer";
 import { Sparkles, Send, Bot, User, Zap, Globe, Shield, LogOut, Chrome } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 
@@ -238,9 +239,18 @@ export default function Chat() {
                       : "bg-white/15 text-white border border-white/30"
                 }`}
               >
-                <p className="whitespace-pre-wrap break-words leading-relaxed text-[15px] font-medium">
-                  {message.content}
-                </p>
+                {message.role === "user" ? (
+                  <p className="whitespace-pre-wrap break-words leading-relaxed text-[15px] font-medium">
+                    {message.content}
+                  </p>
+                ) : (
+                  <div className="text-[15px]">
+                    <MarkdownRenderer 
+                      content={message.content} 
+                      isAuthenticated={isAuthenticated}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           ))
