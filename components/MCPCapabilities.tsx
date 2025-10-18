@@ -22,7 +22,7 @@ const capabilities = [
   },
   {
     name: "Firecrawl",
-    logo: "https://firecrawl.dev/logo.png",
+    logo: "/firecrawl-wordmark.svg",
     fallbackLogo: "https://www.firecrawl.dev/_next/image?url=%2Flogo.png&w=256&q=75",
     description: "Advanced web scraping for complex sites like Medium, Reddit, and Stack Overflow",
     color: "from-blue-500 to-cyan-600",
