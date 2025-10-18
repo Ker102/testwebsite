@@ -5,6 +5,17 @@ import {
   fetchMultipleWebContents,
   formatFetchedContent,
 } from "@/lib/web-fetcher";
+import {
+  scrapeMultipleWithFirecrawl,
+  formatFirecrawlResults,
+  shouldUseFirecrawl,
+} from "@/lib/firecrawl";
+import {
+  shouldUseGitMCP,
+  extractRepository,
+  fetchGitMCPDocumentation,
+  formatGitMCPDocumentation,
+} from "@/lib/gitmcp";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,17 +37,53 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if we should perform web search
+    // Track which tools were used
+    let usedTools: string[] = [];
     let searchResults = "";
     let webContent = "";
-    let usedSearch = false;
+    let gitMCPContent = "";
 
+    // Check if we should fetch GitHub repository information
+    if (shouldUseGitMCP(message)) {
+      try {
+        const repoInfo = extractRepository(message);
+        if (repoInfo) {
+          console.log(
+            `📚 Fetching GitHub documentation for ${repoInfo.owner}/${repoInfo.repo}...`
+          );
+          const gitResult = await fetchGitMCPDocumentation(
+            repoInfo.owner,
+            repoInfo.repo
+          );
+
+          if (gitResult.success) {
+            gitMCPContent = formatGitMCPDocumentation(gitResult);
+            usedTools.push("GitMCP");
+            console.log(
+              `✅ Successfully fetched documentation from ${repoInfo.owner}/${repoInfo.repo}`
+            );
+          } else {
+            console.log(
+              `⚠️ Could not fetch GitMCP documentation: ${gitResult.error}`
+            );
+          }
+        } else {
+          console.log(
+            "ℹ️ GitMCP triggered but no specific repository identified"
+          );
+        }
+      } catch (error) {
+        console.warn("GitMCP fetch failed, continuing without it:", error);
+      }
+    }
+
+    // Check if we should perform web search
     if (shouldUseWebSearch(message)) {
       try {
         // Step 1: Get search results from Brave
         const braveResults = await searchBrave(message);
         searchResults = braveResults.formattedResults;
-        usedSearch = true;
+        usedTools.push("Brave Search");
         console.log("🔍 Web search performed for:", message);
 
         // Step 2: Fetch actual webpage content from top results
@@ -46,32 +93,64 @@ export async function POST(req: NextRequest) {
             braveResults.urls.length,
             "webpages..."
           );
-          const fetchedContents = await fetchMultipleWebContents(
-            braveResults.urls,
-            3 // Fetch content from top 3 results
+
+          // Check if any URLs would benefit from Firecrawl
+          const firecrawlUrls = braveResults.urls.filter((url) =>
+            shouldUseFirecrawl(url)
+          );
+          const regularUrls = braveResults.urls.filter(
+            (url) => !shouldUseFirecrawl(url)
           );
 
-          if (fetchedContents.length > 0) {
-            webContent = formatFetchedContent(fetchedContents);
+          // Use Firecrawl for complex sites
+          if (
+            firecrawlUrls.length > 0 &&
+            process.env.FIRECRAWL_API_KEY
+          ) {
             console.log(
-              "✅ Successfully fetched content from",
-              fetchedContents.length,
-              "webpages"
+              `🔥 Using Firecrawl for ${firecrawlUrls.length} complex websites...`
             );
-          } else {
+            const firecrawlResults = await scrapeMultipleWithFirecrawl(
+              firecrawlUrls,
+              2
+            );
+            if (firecrawlResults.length > 0) {
+              webContent += formatFirecrawlResults(firecrawlResults);
+              usedTools.push("Firecrawl");
+              console.log(
+                `✅ Successfully scraped ${firecrawlResults.length} pages with Firecrawl`
+              );
+            }
+          }
+
+          // Use basic fetch for regular sites
+          if (regularUrls.length > 0) {
+            const fetchedContents = await fetchMultipleWebContents(
+              regularUrls,
+              3 - firecrawlUrls.length // Adjust count based on Firecrawl usage
+            );
+
+            if (fetchedContents.length > 0) {
+              webContent += formatFetchedContent(fetchedContents);
+              console.log(
+                `✅ Successfully fetched content from ${fetchedContents.length} webpages`
+              );
+            }
+          }
+
+          if (!webContent) {
             console.log("⚠️ Could not fetch content from any webpage");
           }
         }
       } catch (error) {
         console.warn("Web search failed, continuing without it:", error);
-        // Continue without search results if it fails
       }
     }
 
     // Initialize Google Generative AI with API key
     const genAI = new GoogleGenerativeAI(apiKey);
 
-    // Get the generative model  
+    // Get the generative model
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
     });
@@ -79,34 +158,38 @@ export async function POST(req: NextRequest) {
     // Get current date and time for context
     const now = new Date();
     const currentDateTime = now.toUTCString();
-    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    
-    // Construct the prompt with search results and web content if available
-    let prompt = message;
-    if (usedSearch && (searchResults || webContent)) {
-      prompt = `You are an AI assistant with access to real-time web search AND the ability to read full webpage content. Current date/time: ${currentDateTime} (Server Time)
 
-${searchResults ? `WEB SEARCH RESULTS (Snippets):\n${searchResults}\n\n` : ""}${webContent ? `FULL WEBPAGE CONTENT (Extracted from top results):\n${webContent}\n\n` : ""}
+    // Construct the prompt with all available context
+    let prompt = message;
+    const hasExternalData = gitMCPContent || searchResults || webContent;
+
+    if (hasExternalData) {
+      const toolsUsed = usedTools.join(", ");
+      prompt = `You are an AI assistant with access to multiple powerful tools. Current date/time: ${currentDateTime} (Server Time)
+Tools used for this query: ${toolsUsed}
+
+${gitMCPContent ? `GITHUB REPOSITORY DOCUMENTATION:\n${gitMCPContent}\n\n` : ""}${searchResults ? `WEB SEARCH RESULTS (Snippets):\n${searchResults}\n\n` : ""}${webContent ? `FULL WEBPAGE CONTENT (Extracted from top results):\n${webContent}\n\n` : ""}
 User Question: ${message}
 
 IMPORTANT INSTRUCTIONS:
-- You have FULL ACCESS to webpage content above, not just snippets - use this detailed information!
-- For weather queries: Extract exact temperature, conditions, forecast from the full webpage content
-- For time/date queries: Use current date/time (${currentDateTime}) and specific timezone info from pages
-- For location queries: Use detailed, specific information from the full webpage content
+- You have access to detailed information above from ${toolsUsed}
+- For GitHub/code questions: Use the repository documentation and code examples provided
+- For web search: Use FULL WEBPAGE CONTENT (more detailed) over search snippets
+- For weather queries: Extract exact temperature, conditions, forecast from webpage content
+- For time/date queries: Use current date/time (${currentDateTime}) and timezone info
 - For current events: Provide latest information with specific dates, numbers, and facts
-- ALWAYS cite sources by mentioning the website (e.g., "According to weather.com..." or "Based on data from...")
-- Prefer information from FULL WEBPAGE CONTENT over search snippets (it's more detailed and accurate)
-- Be specific with all numbers, dates, times, temperatures, and facts you find
+- ALWAYS cite sources by mentioning where the information came from (e.g., "According to the Next.js documentation..." or "Based on weather.com...")
+- Be specific with all numbers, dates, times, temperatures, and facts
 - If you see contradicting information, use the most recent or most authoritative source
+- For code examples, show actual implementation details from the documentation
 - Format your response naturally and conversationally
-- If the webpage content doesn't contain what you need, acknowledge it honestly
+- If the provided content doesn't contain what you need, acknowledge it honestly
 
-Provide a comprehensive, accurate answer using the full webpage content above.`;
+Provide a comprehensive, accurate answer using the information above.`;
     } else {
-      // Add context even without search
+      // No external tools used
       prompt = `Current date/time: ${currentDateTime} (Server Time)
-Note: You may not have access to real-time information for this query. If the user asks about current events, weather, time, or other real-time data, let them know you don't have access to live information.
+Note: You may not have access to real-time information for this query. If the user asks about current events, weather, time, or other real-time data, let them know you don't have access to live information. For GitHub repository questions, suggest they provide a direct repository link.
 
 User Question: ${message}`;
     }
@@ -116,9 +199,12 @@ User Question: ${message}`;
     const response = result.response;
     const text = response.text();
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       response: text,
-      usedWebSearch: usedSearch 
+      usedTools: usedTools,
+      usedWebSearch: usedTools.includes("Brave Search"),
+      usedGitMCP: usedTools.includes("GitMCP"),
+      usedFirecrawl: usedTools.includes("Firecrawl"),
     });
   } catch (error: any) {
     console.error("Error calling Google AI:", error);
@@ -132,4 +218,3 @@ User Question: ${message}`;
     );
   }
 }
-
