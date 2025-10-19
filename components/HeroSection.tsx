@@ -40,8 +40,18 @@ export default function HeroSection() {
         </div>
 
         {/* Main heading */}
+        {/* Original gradient: from-blue-600 via-purple-600 to-pink-600 */}
         <h1 className="text-6xl md:text-8xl font-black mb-6 animate-fade-in">
-          <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-2xl">
+          <span 
+            className="drop-shadow-2xl"
+            style={{
+              background: "linear-gradient(90deg, rgba(0, 242, 255, 1) 0%, rgba(41, 41, 179, 1) 35%, rgba(27, 28, 33, 1) 65%, rgba(0, 212, 255, 1) 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}
+          >
             KaleDocs AI
           </span>
         </h1>

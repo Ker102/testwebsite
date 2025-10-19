@@ -122,7 +122,17 @@ export default function TechnologiesSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-5xl font-black bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-4">
+          {/* Original gradient: from-gray-800 to-gray-600 */}
+          <h2 
+            className="text-5xl font-black mb-4"
+            style={{
+              background: "linear-gradient(90deg, rgba(0, 242, 255, 1) 0%, rgba(41, 41, 179, 1) 35%, rgba(27, 28, 33, 1) 65%, rgba(0, 212, 255, 1) 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}
+          >
             Built With Modern Tech
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
