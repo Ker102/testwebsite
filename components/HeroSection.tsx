@@ -2,6 +2,7 @@
 
 import { Sparkles, Zap, Bot, ArrowDown } from "lucide-react";
 import ChatInterface, { AuthButtons } from "./ChatInterface";
+import FloatingShapes from "./FloatingShapes";
 
 export default function HeroSection() {
   const scrollToCapabilities = () => {
@@ -12,13 +13,16 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col px-6 py-8 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
+    <section id="hero-section" className="relative min-h-screen flex flex-col px-6 py-8 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
       {/* Animated background blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
         <div className="absolute top-40 right-10 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
         <div className="absolute -bottom-8 left-40 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
       </div>
+
+      {/* Floating 3D Shapes */}
+      <FloatingShapes />
 
       {/* Auth Buttons - Top Right */}
       <div className="relative z-20 flex justify-end mb-4 animate-fade-in">
@@ -38,7 +42,7 @@ export default function HeroSection() {
         {/* Main heading */}
         <h1 className="text-6xl md:text-8xl font-black mb-6 animate-fade-in">
           <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-2xl">
-            Teremaailm AI
+            KaleDocs AI
           </span>
         </h1>
 

@@ -1,6 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import MCPCapabilities from "@/components/MCPCapabilities";
 import TechnologiesSection from "@/components/TechnologiesSection";
+import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
       
       {/* Technologies Section */}
       <TechnologiesSection />
+      
+      {/* Contact Section */}
+      <ContactSection />
     </div>
   );
 }

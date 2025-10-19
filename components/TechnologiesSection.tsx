@@ -40,6 +40,36 @@ const technologies = [
     color: "from-green-600 to-green-800",
   },
   {
+    name: "Docker",
+    category: "Container Platform",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+    color: "from-blue-500 to-blue-700",
+  },
+  {
+    name: "MongoDB",
+    category: "Database",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+    color: "from-green-500 to-green-700",
+  },
+  {
+    name: "Redis",
+    category: "Cache & Sessions",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg",
+    color: "from-red-500 to-red-700",
+  },
+  {
+    name: "Cloudflare",
+    category: "CDN & Tunneling",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg",
+    color: "from-orange-500 to-orange-700",
+  },
+  {
+    name: "n8n",
+    category: "Automation",
+    logo: "https://n8n.io/favicon.svg",
+    color: "from-pink-500 to-red-500",
+  },
+  {
     name: "Git",
     category: "Version Control",
     logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
