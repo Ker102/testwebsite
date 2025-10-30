@@ -32,16 +32,16 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto text-center flex-1 flex flex-col justify-center">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg mb-8 animate-fade-in">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-sm font-semibold text-gray-700">
-            Powered by Gemini 2.5 Flash
+        <div className="mx-auto inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur-sm rounded-full shadow-lg mb-6 animate-fade-in">
+          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-xs md:text-sm font-semibold text-gray-700">
+            A Kaelux Project
           </span>
         </div>
 
         {/* Main heading */}
         {/* Original gradient: from-blue-600 via-purple-600 to-pink-600 */}
-        <h1 className="text-6xl md:text-8xl font-black mb-6 animate-fade-in">
+        <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6 animate-fade-in">
           <span 
             className="drop-shadow-2xl"
             style={{
@@ -52,35 +52,34 @@ export default function HeroSection() {
               color: "transparent",
             }}
           >
-            KaleDocs AI
+            Live research copilots for fast, verifiable answers
           </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-3xl mx-auto font-medium animate-fade-in animation-delay-200">
-          AI Assistant with Real-Time Web Search, GitHub Access, and Advanced
-          Web Scraping
+        <p className="text-lg md:text-xl text-gray-700 mb-4 max-w-2xl mx-auto font-medium animate-fade-in animation-delay-200">
+          Kaelocs keeps every brief grounded in fresh web intel, GitHub context, and structured scrapes without leaving the conversation.
         </p>
 
-        <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto animate-fade-in animation-delay-400">
-          Get accurate, up-to-date answers powered by MCP technology
+        <p className="text-base text-gray-600 mb-10 max-w-xl mx-auto animate-fade-in animation-delay-400">
+          Ask, validate, and export findings inside one streamlined workspace powered by MCP automations.
         </p>
 
         {/* Feature badges */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in animation-delay-600">
-          <div className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md">
+        <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-10 animate-fade-in animation-delay-600">
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-sm">
             <Sparkles className="w-5 h-5 text-purple-600" />
             <span className="text-sm font-semibold text-gray-700">
               Real-Time Data
             </span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md">
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-sm">
             <Bot className="w-5 h-5 text-blue-600" />
             <span className="text-sm font-semibold text-gray-700">
               GitHub Integration
             </span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md">
+          <div className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md text-sm">
             <Zap className="w-5 h-5 text-pink-600" />
             <span className="text-sm font-semibold text-gray-700">
               Advanced Scraping
@@ -89,7 +88,7 @@ export default function HeroSection() {
         </div>
 
         {/* Chat Input */}
-        <div className="mt-12 max-w-3xl mx-auto w-full animate-fade-in animation-delay-800">
+        <div className="mt-10 max-w-3xl mx-auto w-full animate-fade-in animation-delay-800">
           <ChatInterface />
         </div>
 
@@ -117,4 +116,3 @@ export default function HeroSection() {
     </section>
   );
 }
-

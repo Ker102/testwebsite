@@ -119,7 +119,7 @@ export default function Navbar() {
                   WebkitTextFillColor: "transparent",
                 }}
               >
-                KaleDocs AI
+                Kaelocs
               </span>
             </div>
 
@@ -225,4 +225,3 @@ export default function Navbar() {
     </>
   );
 }
-
