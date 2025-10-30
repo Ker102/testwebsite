@@ -83,6 +83,8 @@ const technologies = [
   },
 ];
 
+const marqueeItems = [...technologies, ...technologies];
+
 export default function TechnologiesSection() {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -133,70 +135,62 @@ export default function TechnologiesSection() {
           </p>
         </div>
 
-        {/* Technologies Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {technologies.map((tech, index) => (
-            <div
-              key={tech.name}
-              className={`group relative bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 border border-gray-100 ${
-                isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-              }`}
-              style={{
-                transitionDelay: `${index * 100}ms`,
-              }}
-            >
-              {/* Background glow on hover */}
+        {/* Technologies Marquee */}
+        <div className="tech-marquee-container mt-10">
+          <div
+            className={`tech-marquee ${isVisible ? "" : "is-paused"}`}
+            aria-live="off"
+          >
+            {marqueeItems.map((tech, index) => (
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${tech.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500 blur-xl`}
-              />
-
-              {/* Content */}
-              <div className="relative flex flex-col items-center">
-                {/* Logo container with animation */}
-                <div className="w-20 h-20 mb-4 relative group-hover:scale-110 transition-transform duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <img
-                      src={tech.logo}
-                      alt={tech.name}
-                      className="w-12 h-12 object-contain filter group-hover:drop-shadow-lg transition-all duration-300"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'/%3E%3C/svg%3E";
-                      }}
-                    />
-                  </div>
-
-                  {/* Animated ring */}
+                key={`${tech.name}-${index}`}
+                className="tech-marquee-item"
+                aria-hidden={index >= technologies.length}
+              >
+                <div className="group relative bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 border border-gray-100">
                   <div
-                    className={`absolute inset-0 rounded-xl bg-gradient-to-br ${tech.color} opacity-0 group-hover:opacity-30 scale-100 group-hover:scale-110 transition-all duration-500`}
+                    className={`absolute inset-0 bg-gradient-to-br ${tech.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500 blur-xl`}
                   />
+                  <div className="relative flex flex-col items-center">
+                    <div className="w-20 h-20 mb-4 relative group-hover:scale-110 transition-transform duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl opacity-50 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <img
+                          src={tech.logo}
+                          alt={tech.name}
+                          className="w-12 h-12 object-contain filter group-hover:drop-shadow-lg transition-all duration-300"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src =
+                              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'/%3E%3C/svg%3E";
+                          }}
+                        />
+                      </div>
+                      <div
+                        className={`absolute inset-0 rounded-xl bg-gradient-to-br ${tech.color} opacity-0 group-hover:opacity-30 scale-100 group-hover:scale-110 transition-all duration-500`}
+                      />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800 mb-1 transition-all duration-300">
+                      <span className="relative inline-block">
+                        <span className="transition-opacity duration-300 group-hover:opacity-0">
+                          {tech.name}
+                        </span>
+                        <span className="absolute inset-0 gradient-text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 hero-font">
+                          {tech.name}
+                        </span>
+                      </span>
+                    </h3>
+                    <span className="text-xs font-medium text-gray-500 px-3 py-1 bg-gray-100 rounded-full group-hover:bg-gray-200 transition-colors duration-300">
+                      {tech.category}
+                    </span>
+                  </div>
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  </div>
                 </div>
-
-                {/* Tech name */}
-                <h3 className="text-lg font-bold text-gray-800 mb-1 transition-all duration-300">
-                  <span className="relative inline-block">
-                    <span className="transition-opacity duration-300 group-hover:opacity-0">
-                      {tech.name}
-                    </span>
-                    <span className="absolute inset-0 gradient-text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 hero-font">
-                      {tech.name}
-                    </span>
-                  </span>
-                </h3>
-
-                {/* Category badge */}
-                <span className="text-xs font-medium text-gray-500 px-3 py-1 bg-gray-100 rounded-full group-hover:bg-gray-200 transition-colors duration-300">
-                  {tech.category}
-                </span>
               </div>
-
-              {/* Shine effect */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Bottom decoration */}
