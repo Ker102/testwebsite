@@ -81,9 +81,9 @@ export default function DiscoverKaelux() {
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-white/70 shadow-sm text-xs font-semibold tracking-[0.28em] uppercase text-slate-500">
             Featured
           </span>
-          <h2 className="mt-5 text-4xl md:text-5xl font-black hero-font leading-[1.15]">
-            <span className="gradient-text-primary align-middle">Discover </span>
-            <span className="shiny-text align-middle">Kaelux.dev</span>
+          <h2 className="mt-5 flex justify-center gap-2 text-4xl md:text-5xl font-black hero-font items-baseline">
+            <span className="gradient-text-primary">Discover</span>
+            <span className="shiny-text">Kaelux.dev</span>
           </h2>
           <p className="mt-4 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
             Kaelux.dev crafts immersive AI-first experiences, blending research automation,

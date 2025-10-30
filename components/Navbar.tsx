@@ -93,9 +93,9 @@ export default function Navbar() {
                 onClick={() => scrollToSection("#hero")}
                 aria-label="Back to top"
               >
-                <div className="relative w-12 h-12 rounded-3xl overflow-hidden bg-white/40 border border-white/50 shadow-lg shadow-indigo-500/30">
+                <div className="relative w-12 h-12 rounded-3xl overflow-hidden bg-white/65 border border-white/80 shadow-lg shadow-indigo-500/30">
                   <Image
-                    src="/logo.svg"
+                    src="/logo.png"
                     alt="Kaelocs logo"
                     fill
                     sizes="48px"
