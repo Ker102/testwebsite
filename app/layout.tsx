@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import Navbar from "@/components/Navbar";
@@ -12,6 +13,18 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const heroFont = localFont({
+  src: [
+    {
+      path: "../public/fonts/ClashGrotesk-Variable.woff2",
+      style: "normal",
+      weight: "100 700",
+    },
+  ],
+  variable: "--font-hero",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${heroFont.variable} antialiased`}
       >
         <Providers>
           <Navbar />

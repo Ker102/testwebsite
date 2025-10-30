@@ -44,7 +44,7 @@ export default function AdminLogin() {
               <div className="absolute inset-0 blur-2xl bg-purple-500/40 animate-pulse"></div>
             </div>
           </div>
-          <h1 className="text-5xl font-black bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent mb-3 drop-shadow-2xl">
+          <h1 className="text-5xl font-black gradient-text-primary hero-font mb-3 drop-shadow-2xl">
             Admin Access
           </h1>
           <p className="text-white/70 text-lg font-medium">
@@ -140,4 +140,3 @@ export default function AdminLogin() {
     </div>
   );
 }
-

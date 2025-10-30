@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
 import MarkdownRenderer from "./MarkdownRenderer";
-import { Sparkles, Send, Bot, User, Zap, Globe, Shield, LogOut, Chrome } from "lucide-react";
+import { Loader2, Send, Bot, User, Globe, Shield, LogOut, Chrome, Microscope } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 
 interface Message {
@@ -132,53 +132,66 @@ export default function ChatInterface({ onInputFocus }: ChatInterfaceProps) {
       </div>
 
       {/* Chat Input - Rendered separately in HeroSection */}
-      <form onSubmit={handleSubmit} className="relative group" id="chat-input-form">
-        <div className="flex gap-3 items-end backdrop-blur-2xl bg-white/95 rounded-3xl p-4 border-2 border-white/40 shadow-2xl hover:shadow-3xl transition-all duration-500">
-          
-          <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-300 group-hover:scale-110 transition-transform duration-300">
-            <Sparkles className="w-6 h-6 text-blue-600 group-hover:animate-spin" />
+      <form onSubmit={handleSubmit} className="relative" id="chat-input-form">
+        <div className="chat-shell group flex flex-col gap-3 rounded-[20px] border border-white/70 bg-white/95 backdrop-blur-xl p-4 shadow-[0_18px_40px_-20px_rgba(79,70,229,0.4)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_26px_55px_-24px_rgba(56,189,248,0.45)] focus-within:border-sky-200 focus-within:bg-white">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+            <div className="chat-sigil">
+              <Microscope className="chat-sigil__icon" />
+              <span className="chat-sigil__spark" aria-hidden="true" />
+            </div>
+
+            <div className="flex-1 w-full rounded-xl border border-white/80 bg-white px-4 py-2 transition-colors duration-300 focus-within:border-sky-200 focus-within:bg-white">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onFocus={onInputFocus}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }
+                }}
+                placeholder="What brief can I help you validate?"
+                className="w-full bg-transparent px-1 py-1 text-base text-gray-800 placeholder-gray-400 font-medium leading-relaxed focus:outline-none focus:ring-0 resize-none transition-all duration-300 min-h-[48px] max-h-[200px]"
+                rows={1}
+                disabled={isLoading}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={!input.trim() || isLoading}
+              className="group/btn relative flex w-full sm:w-auto items-center justify-center overflow-hidden rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-500 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-indigo-500/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 min-h-[48px]"
+            >
+              <span
+                className="absolute inset-0 rounded-xl bg-gradient-to-r from-white/20 via-transparent to-white/20 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100"
+                aria-hidden="true"
+              />
+              <span className="relative z-10 flex items-center gap-2">
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span className="hidden sm:inline">Sending</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                    <span className="hidden sm:inline">Send</span>
+                  </>
+                )}
+              </span>
+            </button>
           </div>
 
-          <div className="flex-1 relative">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onFocus={onInputFocus}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSubmit(e);
-                }
-              }}
-              placeholder="Ask me anything... (Admin login required)"
-              className="w-full px-5 py-4 rounded-2xl border-2 border-gray-200 bg-white text-gray-800 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-400/30 hover:bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 resize-none transition-all duration-300 min-h-[56px] max-h-[200px] font-medium"
-              rows={1}
-              disabled={isLoading}
-            />
+          <div className="flex flex-col gap-2 text-xs text-gray-500/80 sm:flex-row sm:items-center sm:justify-between px-1 pt-1">
+            <div className="flex items-center gap-2 transition-all duration-300 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100">
+              <span className="gradient-bar inline-flex h-1 w-10 rounded-full bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400" />
+              <span>Press Enter to send · Shift+Enter adds a new line</span>
+            </div>
+            <span className="hidden sm:inline text-[11px] text-gray-400 transition-colors duration-300 group-focus-within:text-gray-500">
+              Conversations stay local to your session.
+            </span>
           </div>
-
-          <button
-            type="submit"
-            disabled={!input.trim() || isLoading}
-            className="group/btn relative flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 active:scale-95 min-h-[56px] min-w-[56px]"
-          >
-            {isLoading ? (
-              <>
-                <Sparkles className="w-5 h-5 animate-spin" />
-                <span className="hidden sm:inline text-sm">Sending</span>
-              </>
-            ) : (
-              <>
-                <Send className="w-5 h-5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform duration-300" />
-                <span className="hidden sm:inline text-sm">Send</span>
-              </>
-            )}
-          </button>
-        </div>
-        
-        <div className="absolute -top-8 left-4 text-gray-600 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
-          <Zap className="w-3 h-3" />
-          <span>Press Enter to send, Shift+Enter for new line</span>
         </div>
       </form>
 
@@ -229,19 +242,18 @@ export default function ChatInterface({ onInputFocus }: ChatInterfaceProps) {
               ))}
               {isLoading && (
                 <div className="flex items-start gap-3 animate-slide-up">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg animate-pulse">
-                    <Bot className="w-5 h-5 text-white" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-sky-500 flex items-center justify-center shadow-lg">
+                    <Loader2 className="w-5 h-5 text-white animate-spin" />
                   </div>
-                  <div className="bg-gray-100 rounded-2xl px-6 py-4 shadow-lg">
-                    <div className="flex items-center space-x-2.5">
-                      <Sparkles className="w-4 h-4 text-purple-600 animate-spin" />
-                      <div className="flex space-x-1.5">
-                        <div className="w-2.5 h-2.5 bg-blue-400 rounded-full animate-bounce" />
-                        <div className="w-2.5 h-2.5 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }} />
-                        <div className="w-2.5 h-2.5 bg-pink-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }} />
+                  <div className="bg-white/80 backdrop-blur-sm border border-gray-200/70 rounded-2xl px-6 py-4 shadow-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-end gap-1.5">
+                        <span className="typing-bar" />
+                        <span className="typing-bar" />
+                        <span className="typing-bar" />
                       </div>
-                      <span className="text-gray-600 text-sm font-medium">AI is thinking</span>
-                      <Globe className="w-4 h-4 text-blue-400 animate-pulse ml-2" />
+                      <span className="text-gray-600 text-sm font-medium">Composing fresh results…</span>
+                      <Globe className="w-4 h-4 text-sky-500/90 animate-pulse" />
                     </div>
                   </div>
                 </div>
@@ -301,4 +313,3 @@ export function AuthButtons() {
     </div>
   );
 }
-

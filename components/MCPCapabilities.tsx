@@ -52,16 +52,8 @@ export default function MCPCapabilities() {
               Powered by MCP Technology
             </span>
           </div>
-          {/* Original gradient: from-gray-800 to-gray-600 */}
           <h2 
-            className="text-5xl font-black mb-4"
-            style={{
-              background: "linear-gradient(90deg, rgba(0, 242, 255, 1) 0%, rgba(41, 41, 179, 1) 35%, rgba(27, 28, 33, 1) 65%, rgba(0, 212, 255, 1) 100%)",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              color: "transparent",
-            }}
+            className="text-5xl font-black mb-4 gradient-text-primary hero-font"
           >
             AI Capabilities
           </h2>
@@ -110,8 +102,15 @@ export default function MCPCapabilities() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-2xl font-bold text-gray-800 mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-gray-800 group-hover:to-gray-600 transition-all duration-300">
-                  {capability.name}
+                <h3 className="text-2xl font-bold text-gray-800 mb-3 transition-all duration-300">
+                  <span className="relative inline-block">
+                    <span className="transition-opacity duration-300 group-hover:opacity-0">
+                      {capability.name}
+                    </span>
+                    <span className="absolute inset-0 gradient-text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 hero-font">
+                      {capability.name}
+                    </span>
+                  </span>
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   {capability.description}
@@ -119,7 +118,7 @@ export default function MCPCapabilities() {
 
                 {/* Hover indicator */}
                 <div
-                  className={`mt-6 flex items-center gap-2 text-sm font-semibold text-transparent bg-gradient-to-r ${capability.color} bg-clip-text opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                  className={`mt-6 flex items-center gap-2 text-sm font-semibold gradient-text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                 >
                   Learn more
                   <svg
@@ -144,4 +143,3 @@ export default function MCPCapabilities() {
     </section>
   );
 }
-

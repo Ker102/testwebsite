@@ -29,6 +29,27 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.hero-font {
+  font-family: var(--font-hero), var(--font-geist-sans), "Segoe UI", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.gradient-text-primary {
+  background: linear-gradient(90deg, #FF3BFF 0%, #ECBFBF 38.02%, #5C24FF 75.83%, #D94FD5 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-neutral {
+  background: linear-gradient(90deg, #000000 0%, #121212 35%, #525252 70%, #E0E0E0 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
 /* Custom Animations */
 @keyframes fade-in {
   from {
@@ -255,5 +276,147 @@ html {
   }
   66% {
     transform: translate(30px, -30px) scale(0.9);
+  }
+}
+
+/* Chat interface enhancements */
+.chat-shell {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.chat-shell::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: inherit;
+  background:
+    radial-gradient(95% 120% at 50% 110%, rgba(56, 189, 248, 0.38), transparent 70%),
+    radial-gradient(120% 110% at 50% -10%, rgba(129, 140, 248, 0.32), transparent 75%);
+  filter: blur(18px);
+  opacity: 0.45;
+  transition: opacity 0.45s ease;
+  z-index: -2;
+}
+
+.chat-shell::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.08));
+  opacity: 0.55;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.chat-shell:hover::before,
+.chat-shell:focus-within::before {
+  opacity: 0.75;
+}
+
+.chat-shell:hover::after,
+.chat-shell:focus-within::after {
+  opacity: 0.8;
+}
+
+.chat-sigil {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.45), rgba(129, 140, 248, 0.75));
+  box-shadow: 0 10px 28px -18px rgba(59, 130, 246, 0.65);
+  transition: transform 0.35s ease;
+}
+
+.chat-sigil__icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: #ffffff;
+  filter: drop-shadow(0 8px 18px rgba(59, 130, 246, 0.4));
+  transition: transform 0.4s ease;
+}
+
+.chat-sigil__spark {
+  position: absolute;
+  right: 6px;
+  top: 8px;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(56, 189, 248, 0.4) 100%);
+  animation: sparkPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.chat-shell:hover .chat-sigil,
+.chat-shell:focus-within .chat-sigil {
+  transform: translateY(-1px);
+}
+
+.chat-shell:hover .chat-sigil__icon,
+.chat-shell:focus-within .chat-sigil__icon {
+  transform: rotate(-8deg);
+}
+
+@keyframes sparkPulse {
+  0%,
+  100% {
+    transform: scale(0.75);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.gradient-bar {
+  background-size: 200% 200%;
+  animation: gradientFlow 7s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.typing-bar {
+  width: 6px;
+  height: 24px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.8), rgba(56, 189, 248, 0.7));
+  animation: typingBar 1.2s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.typing-bar:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-bar:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typingBar {
+  0%,
+  100% {
+    transform: scaleY(0.55);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
   }
 }

@@ -122,16 +122,8 @@ export default function TechnologiesSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          {/* Original gradient: from-gray-800 to-gray-600 */}
           <h2 
-            className="text-5xl font-black mb-4"
-            style={{
-              background: "linear-gradient(90deg, rgba(0, 242, 255, 1) 0%, rgba(41, 41, 179, 1) 35%, rgba(27, 28, 33, 1) 65%, rgba(0, 212, 255, 1) 100%)",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              color: "transparent",
-            }}
+            className="text-5xl font-black mb-4 gradient-text-primary hero-font"
           >
             Built With Modern Tech
           </h2>
@@ -182,8 +174,15 @@ export default function TechnologiesSection() {
                 </div>
 
                 {/* Tech name */}
-                <h3 className="text-lg font-bold text-gray-800 mb-1 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-gray-800 group-hover:to-gray-600 transition-all duration-300">
-                  {tech.name}
+                <h3 className="text-lg font-bold text-gray-800 mb-1 transition-all duration-300">
+                  <span className="relative inline-block">
+                    <span className="transition-opacity duration-300 group-hover:opacity-0">
+                      {tech.name}
+                    </span>
+                    <span className="absolute inset-0 gradient-text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 hero-font">
+                      {tech.name}
+                    </span>
+                  </span>
                 </h3>
 
                 {/* Category badge */}
@@ -217,4 +216,3 @@ export default function TechnologiesSection() {
     </section>
   );
 }
-

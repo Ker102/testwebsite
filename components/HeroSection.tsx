@@ -13,7 +13,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section id="hero-section" className="relative min-h-screen flex flex-col px-6 py-8 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
+    <section id="hero-section" className="relative min-h-screen flex flex-col px-6 py-8 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden hero-font">
       {/* Animated background blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
@@ -39,30 +39,15 @@ export default function HeroSection() {
           </span>
         </div>
 
-        {/* Main heading */}
-        {/* Original gradient: from-blue-600 via-purple-600 to-pink-600 */}
         <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6 animate-fade-in">
-          <span 
-            className="drop-shadow-2xl"
-            style={{
-              background: "linear-gradient(90deg, rgba(0, 242, 255, 1) 0%, rgba(41, 41, 179, 1) 35%, rgba(27, 28, 33, 1) 65%, rgba(0, 212, 255, 1) 100%)",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              color: "transparent",
-            }}
-          >
-            Live research copilots for fast, verifiable answers
-          </span>
+          <span className="gradient-text-primary drop-shadow-2xl block md:inline">
+            Live research intelligence
+          </span>{" "}
+          <span className="text-gray-900">for fast, verifiable answers</span>
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-lg md:text-xl text-gray-700 mb-4 max-w-2xl mx-auto font-medium animate-fade-in animation-delay-200">
-          Kaelocs keeps every brief grounded in fresh web intel, GitHub context, and structured scrapes without leaving the conversation.
-        </p>
-
-        <p className="text-base text-gray-600 mb-10 max-w-xl mx-auto animate-fade-in animation-delay-400">
-          Ask, validate, and export findings inside one streamlined workspace powered by MCP automations.
+        <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl mx-auto font-medium animate-fade-in animation-delay-200">
+          Kaelocs keeps every brief grounded in fresh web intel, GitHub context, and structured scrapes without leaving the conversation—ask, validate, and export findings inside one streamlined workspace powered by MCP automations.
         </p>
 
         {/* Feature badges */}

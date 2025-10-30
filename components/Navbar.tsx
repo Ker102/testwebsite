@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Home, Code, Briefcase, Mail, Menu, X, FileText } from "lucide-react";
+import { Home, Code, Briefcase, Mail, Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "Home", href: "#hero", icon: Home },
@@ -88,36 +89,22 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            {/* Original gradient: from-blue-600 via-purple-600 to-pink-600 */}
             <div
               className="flex items-center gap-2 cursor-pointer group"
               onClick={() => scrollToSection("#hero")}
             >
-              <div className="relative">
-                <div 
-                  className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110"
-                  style={{
-                    background: "linear-gradient(90deg, rgba(0, 255, 153, 1) 0%, rgba(14, 14, 23, 1) 26%, rgba(38, 53, 255, 1) 46%, rgba(0, 212, 255, 1) 100%)",
-                  }}
-                >
-                  <FileText className="w-5 h-5 text-white" />
-                </div>
-                <div 
-                  className="absolute inset-0 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity duration-300"
-                  style={{
-                    background: "linear-gradient(90deg, rgba(0, 255, 153, 1) 0%, rgba(14, 14, 23, 1) 26%, rgba(38, 53, 255, 1) 46%, rgba(0, 212, 255, 1) 100%)",
-                  }}
-                />
-              </div>
+              <Image
+                src="/logo.svg"
+                alt="Kaelocs logo"
+                width={40}
+                height={40}
+                priority
+                className="w-10 h-10 rounded-xl object-contain transition-transform duration-300 group-hover:scale-105"
+              />
               <span
-                className={`font-black text-transparent bg-clip-text transition-all duration-300 ${
+                className={`font-black gradient-text-neutral transition-all duration-300 hero-font ${
                   isScrolled ? "text-xl" : "text-2xl"
                 }`}
-                style={{
-                  background: "linear-gradient(90deg, rgba(0, 255, 153, 1) 0%, rgba(14, 14, 23, 1) 26%, rgba(38, 53, 255, 1) 46%, rgba(0, 212, 255, 1) 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
               >
                 Kaelocs
               </span>

@@ -168,7 +168,7 @@ export default function Chat() {
             <Sparkles className={`w-10 h-10 ${isAuthenticated ? 'text-cyan-500' : 'text-cyan-400'}`} />
             <div className="absolute inset-0 blur-xl bg-cyan-500/50 animate-pulse"></div>
           </div>
-          <h1 className={`text-6xl font-black bg-gradient-to-r ${isAuthenticated ? 'from-cyan-600 via-blue-600 to-indigo-600' : 'from-cyan-300 via-blue-300 to-indigo-300'} bg-clip-text text-transparent drop-shadow-2xl tracking-tight hover:scale-105 transition-transform duration-300`}>
+          <h1 className="text-6xl font-black gradient-text-primary hero-font drop-shadow-2xl tracking-tight hover:scale-105 transition-transform duration-300">
             Teremaailm AI
           </h1>
           <div className="relative animate-pulse animation-delay-2000">
@@ -346,4 +346,3 @@ export default function Chat() {
     </div>
   );
 }
-
