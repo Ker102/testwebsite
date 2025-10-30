@@ -1,6 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import MCPCapabilities from "@/components/MCPCapabilities";
 import TechnologiesSection from "@/components/TechnologiesSection";
+import DiscoverKaelux from "@/components/DiscoverKaelux";
 import ContactSection from "@/components/ContactSection";
 
 export default function Home() {
@@ -14,6 +15,9 @@ export default function Home() {
       
       {/* Technologies Section */}
       <TechnologiesSection />
+
+      {/* Discover Kaelux */}
+      <DiscoverKaelux />
       
       {/* Contact Section */}
       <ContactSection />

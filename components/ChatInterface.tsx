@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
 import MarkdownRenderer from "./MarkdownRenderer";
-import { Loader2, Send, Bot, User, Globe, Shield, LogOut, Chrome, Microscope } from "lucide-react";
+import { Loader2, Send, Bot, User, Globe, Shield, LogOut, Chrome } from "lucide-react";
 import { useAuthStore } from "@/lib/auth-store";
 
 interface Message {
@@ -133,14 +133,9 @@ export default function ChatInterface({ onInputFocus }: ChatInterfaceProps) {
 
       {/* Chat Input - Rendered separately in HeroSection */}
       <form onSubmit={handleSubmit} className="relative" id="chat-input-form">
-        <div className="chat-shell group flex flex-col gap-3 rounded-[20px] border border-white/70 bg-white/95 backdrop-blur-xl p-4 shadow-[0_18px_40px_-20px_rgba(79,70,229,0.4)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_26px_55px_-24px_rgba(56,189,248,0.45)] focus-within:border-sky-200 focus-within:bg-white">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <div className="chat-sigil">
-              <Microscope className="chat-sigil__icon" />
-              <span className="chat-sigil__spark" aria-hidden="true" />
-            </div>
-
-            <div className="flex-1 w-full rounded-xl border border-white/80 bg-white px-4 py-2 transition-colors duration-300 focus-within:border-sky-200 focus-within:bg-white">
+        <div className="chat-shell group flex flex-col gap-3 rounded-[18px] border border-white/70 bg-white/95 backdrop-blur-xl p-3 sm:p-4 shadow-[0_16px_36px_-18px_rgba(79,70,229,0.35)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_22px_45px_-20px_rgba(56,189,248,0.4)] focus-within:border-sky-200 focus-within:bg-white">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
+            <div className="flex-1 w-full rounded-xl border border-white/80 bg-white px-3 sm:px-4 py-2 transition-colors duration-300 focus-within:border-sky-200 focus-within:bg-white">
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -152,7 +147,7 @@ export default function ChatInterface({ onInputFocus }: ChatInterfaceProps) {
                   }
                 }}
                 placeholder="What brief can I help you validate?"
-                className="w-full bg-transparent px-1 py-1 text-base text-gray-800 placeholder-gray-400 font-medium leading-relaxed focus:outline-none focus:ring-0 resize-none transition-all duration-300 min-h-[48px] max-h-[200px]"
+                className="w-full bg-transparent px-1 py-1 text-base text-gray-800 placeholder-gray-400 font-medium leading-relaxed focus:outline-none focus:ring-0 resize-none transition-all duration-300 min-h-[42px] max-h-[180px]"
                 rows={1}
                 disabled={isLoading}
               />
@@ -161,7 +156,7 @@ export default function ChatInterface({ onInputFocus }: ChatInterfaceProps) {
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
-              className="group/btn relative flex w-full sm:w-auto items-center justify-center overflow-hidden rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-500 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-indigo-500/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 min-h-[48px]"
+              className="group/btn relative flex w-full sm:w-auto items-center justify-center overflow-hidden rounded-xl px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-500 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-indigo-500/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-200 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 min-h-[44px]"
             >
               <span
                 className="absolute inset-0 rounded-xl bg-gradient-to-r from-white/20 via-transparent to-white/20 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100"

@@ -107,12 +107,6 @@ export default function HeroSection() {
       {/* Extra bottom spacing */}
       <div className="h-16"></div>
 
-      {/* Floating icons animation */}
-      <div className="absolute inset-0 pointer-events-none">
-        <Sparkles className="absolute top-1/4 left-1/4 w-6 h-6 text-purple-400 animate-pulse" />
-        <Bot className="absolute top-1/3 right-1/4 w-8 h-8 text-blue-400 animate-bounce animation-delay-2000" />
-        <Zap className="absolute bottom-1/3 left-1/3 w-6 h-6 text-pink-400 animate-pulse animation-delay-4000" />
-      </div>
     </section>
   );
 }
