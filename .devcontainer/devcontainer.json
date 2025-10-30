@@ -1,0 +1,38 @@
+{
+  "name": "Next.js Codespace",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm",
+  "remoteUser": "node",
+  "containerEnv": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  },
+  "postCreateCommand": "npm ci",
+  "postAttachCommand": "npm run dev",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js dev server",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "eslint.workingDirectories": [
+          "./"
+        ],
+        "files.exclude": {
+          "**/.next": true
+        }
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "streetsidesoftware.code-spell-checker",
+        "yoavbls.pretty-ts-errors"
+      ]
+    }
+  }
+}
