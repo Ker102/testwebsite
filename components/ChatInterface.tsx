@@ -279,35 +279,66 @@ export function AuthButtons() {
     router.push("/admin/login");
   };
 
+  const baseButton =
+    "flex items-center gap-2 rounded-full px-4 py-2 border text-sm transition-all duration-300 shadow-lg hover:shadow-xl";
+  const glassBase =
+    "backdrop-blur-2xl bg-white/60 border-white/60 hover:bg-white/70";
+  const accentBase =
+    "backdrop-blur-2xl border-white/60 bg-white/50 hover:bg-white/70";
+
   return (
     <div className="flex flex-col md:flex-row gap-3">
       {session ? (
-        <div className="flex items-center gap-3 backdrop-blur-xl bg-white/90 border border-gray-200 rounded-full px-5 py-2.5 shadow-lg hover:shadow-xl transition-all duration-300">
+        <div
+          className={`${baseButton} ${glassBase}`}
+        >
           <Chrome className="w-5 h-5 text-blue-600" />
-          <span className="text-gray-700 font-semibold text-sm">{session.user?.email}</span>
-          <button onClick={() => signOut()} className="ml-2 p-1.5 rounded-full hover:bg-red-100 transition-all duration-200">
+          <span className="text-gray-800 font-semibold text-sm">
+            {session.user?.email}
+          </span>
+          <button
+            onClick={() => signOut()}
+            className="ml-2 p-1.5 rounded-full hover:bg-red-100 transition-all duration-200"
+          >
             <LogOut className="w-4 h-4 text-red-500" />
           </button>
         </div>
       ) : (
-        <button onClick={() => signIn("google")} className="flex items-center gap-2 backdrop-blur-xl bg-white/90 border border-gray-200 rounded-full px-5 py-2.5 shadow-lg hover:shadow-xl transition-all duration-300">
+        <button
+          onClick={() => signIn("google")}
+          className={`${baseButton} ${glassBase}`}
+        >
           <Chrome className="w-5 h-5 text-blue-500" />
-          <span className="text-gray-700 font-semibold text-sm">Sign in with Google</span>
+          <span className="text-gray-800 font-semibold text-sm">
+            Sign in with Google
+          </span>
         </button>
       )}
 
       {isAuthenticated ? (
-        <div className="flex items-center gap-3 backdrop-blur-xl bg-green-50/90 border border-green-400 rounded-full px-5 py-2.5 shadow-lg hover:shadow-xl transition-all duration-300">
+        <div
+          className={`${baseButton} ${accentBase} border-emerald-300/60`}
+        >
           <Shield className="w-5 h-5 text-green-600 animate-pulse" />
-          <span className="text-green-700 font-semibold text-sm">Admin Access</span>
-          <button onClick={handleLogout} className="ml-2 p-1.5 rounded-full hover:bg-red-100 transition-all duration-200">
+          <span className="text-emerald-700 font-semibold text-sm">
+            Admin Access
+          </span>
+          <button
+            onClick={handleLogout}
+            className="ml-2 p-1.5 rounded-full hover:bg-red-100 transition-all duration-200"
+          >
             <LogOut className="w-4 h-4 text-red-500" />
           </button>
         </div>
       ) : (
-        <button onClick={() => router.push("/admin/login")} className="flex items-center gap-2 backdrop-blur-xl bg-amber-50/90 border border-amber-400 rounded-full px-5 py-2.5 shadow-lg hover:shadow-xl transition-all duration-300">
+        <button
+          onClick={() => router.push("/admin/login")}
+          className={`${baseButton} ${accentBase} border-amber-300/70`}
+        >
           <Shield className="w-5 h-5 text-amber-600" />
-          <span className="text-amber-700 font-semibold text-sm">Admin Login for AI</span>
+          <span className="text-amber-700 font-semibold text-sm">
+            Admin Login for AI
+          </span>
         </button>
       )}
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import { Sparkles, Zap, Bot, ArrowDown } from "lucide-react";
-import ChatInterface, { AuthButtons } from "./ChatInterface";
+import { Sparkles, Zap, Bot, ArrowDown, ChevronRight } from "lucide-react";
+import ChatInterface from "./ChatInterface";
 import FloatingShapes from "./FloatingShapes";
 
 export default function HeroSection() {
@@ -9,6 +9,15 @@ export default function HeroSection() {
     const capabilitiesSection = document.getElementById("capabilities-section");
     if (capabilitiesSection) {
       capabilitiesSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToConnect = () => {
+    const connectSection =
+      document.getElementById("connect-section") ??
+      document.getElementById("contact-section");
+    if (connectSection) {
+      connectSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -24,20 +33,26 @@ export default function HeroSection() {
       {/* Floating 3D Shapes */}
       <FloatingShapes />
 
-      {/* Auth Buttons - Top Right */}
-      <div className="relative z-20 flex justify-end mb-4 animate-fade-in">
-        <AuthButtons />
-      </div>
-
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto text-center flex-1 flex flex-col justify-center">
+      <div className="relative z-10 max-w-5xl mx-auto text-center flex-1 flex flex-col justify-center pt-20 md:pt-24">
         {/* Badge */}
-        <div className="mx-auto inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur-sm rounded-full shadow-lg mb-6 animate-fade-in">
+        <button
+          type="button"
+          onClick={scrollToConnect}
+          className="group mx-auto inline-flex items-center gap-3 px-3 py-1.5 bg-white/85 backdrop-blur-sm border border-white/70 rounded-full shadow-lg mb-6 animate-fade-in transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/70"
+          aria-label="Discover more about Kaelux projects"
+        >
           <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-xs md:text-sm font-semibold text-gray-700">
-            A Kaelux Project
-          </span>
-        </div>
+          <div className="flex flex-col items-start leading-snug">
+            <span className="text-xs md:text-sm font-semibold text-gray-700">
+              A Kaelux Project
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-purple-500 font-semibold flex items-center gap-1">
+              Discover more
+              <ChevronRight className="w-3 h-3 text-purple-500 group-hover:translate-x-0.5 transition-transform duration-300" />
+            </span>
+          </div>
+        </button>
 
         <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6 animate-fade-in">
           <span className="gradient-text-primary drop-shadow-2xl block md:inline">
